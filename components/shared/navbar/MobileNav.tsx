@@ -7,9 +7,11 @@ import { usePathname } from "next/navigation";
 
 import {
   Sheet,
+  SheetTitle,
   SheetClose,
   SheetTrigger,
   SheetContent,
+  SheetDescription,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { sidebarLinks } from "@/constants";
@@ -70,6 +72,9 @@ const MobileNav = () => {
         side="left"
         className="background-light900_dark200 overflow-y-auto border-none"
       >
+        <SheetTitle className="hidden">Menu</SheetTitle>
+        <SheetDescription className="hidden">Menu list</SheetDescription>
+
         {/* Logo */}
         <Link href="/" className="flex items-center gap-1">
           <Image
