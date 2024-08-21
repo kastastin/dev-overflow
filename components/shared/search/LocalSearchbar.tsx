@@ -21,17 +21,19 @@ const LocalSearchbar = ({
 }: LocalSearchbarProps) => {
   return (
     <div
-      className={`background-light800_darkgradient flex min-h-[56px] grow items-center gap-4 rounded-[10px] px-4 ${otherClasses}`}
+      className={`
+        ${otherClasses}
+        background-light800_darkgradient flex min-h-[56px] grow items-center gap-4 rounded-[10px] px-4
+        ${iconPosition === "right" ? "flex-row-reverse" : "flex-row"}
+      `}
     >
-      {iconPosition === "left" && (
-        <Image
-          src={imgSrc}
-          alt="search"
-          width={24}
-          height={24}
-          className="cursor-pointer"
-        />
-      )}
+      <Image
+        src={imgSrc}
+        alt="search"
+        width={24}
+        height={24}
+        className="cursor-pointer"
+      />
 
       <Input
         type="text"
@@ -41,16 +43,6 @@ const LocalSearchbar = ({
         className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none"
         onChange={() => {}}
       />
-
-      {iconPosition === "right" && (
-        <Image
-          src={imgSrc}
-          alt="search"
-          width={24}
-          height={24}
-          className="cursor-pointer"
-        />
-      )}
     </div>
   );
 };
