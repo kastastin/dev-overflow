@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 type Props = {
   title: string;
   description: string;
-  link: "string";
-  linkTitle: "string";
+  link: string;
+  linkTitle: string;
 };
 
 const NoResult = ({ title, description, link, linkTitle }: Props) => {
@@ -19,6 +19,7 @@ const NoResult = ({ title, description, link, linkTitle }: Props) => {
         alt="No result illustration"
         width={270}
         height={200}
+        priority
         className="block object-contain dark:hidden"
       />
 
@@ -28,7 +29,8 @@ const NoResult = ({ title, description, link, linkTitle }: Props) => {
         alt="No result illustration"
         width={270}
         height={200}
-        className="hidden object-contain dark:block"
+        priority
+        className="hidden w-auto object-contain dark:block"
       />
 
       <h2 className="h2-bold text-dark200_light900 mt-8">{title}</h2>
@@ -37,7 +39,7 @@ const NoResult = ({ title, description, link, linkTitle }: Props) => {
       </p>
 
       <Link href={link}>
-        <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg bg-primary-500 px-4 py-3 text-light-900 dark:text-light-500">
+        <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg bg-primary-500 px-4 py-3 text-light-900 hover:bg-light-500">
           {linkTitle}
         </Button>
       </Link>
