@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { QuestionsSchema } from "@/lib/validations";
+import { createQuestion } from "@/lib/actions/question.action";
 
 const type: any = "create";
 
@@ -36,16 +37,17 @@ const Question = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
-    
+
     try {
       // Make an async call to API -> create a question
       // contail all form data
 
+      await createQuestion({});
+
       // navigate to home page
     } catch (error) {
-      
     } finally {
       setIsSubmitting(false);
     }
@@ -138,6 +140,8 @@ const Question = () => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
