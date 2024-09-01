@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,8 +21,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { QuestionsSchema } from "@/lib/validations";
 
+const type: any = "create";
+
 const Question = () => {
   const editorRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -34,7 +37,18 @@ const Question = () => {
   });
 
   function onSubmit(values: z.infer<typeof QuestionsSchema>) {
-    console.log(values);
+    setIsSubmitting(true);
+    
+    try {
+      // Make an async call to API -> create a question
+      // contail all form data
+
+      // navigate to home page
+    } catch (error) {
+      
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const handleInputKeyDown = (
@@ -216,7 +230,17 @@ const Question = () => {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="primary-gradient w-fit !text-light-900"
+        >
+          {isSubmitting ? (
+            <>{type === "edit" ? "Editing..." : "Posting..."}</>
+          ) : (
+            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+          )}
+        </Button>
       </form>
     </Form>
   );
