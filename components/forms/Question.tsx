@@ -2,10 +2,11 @@
 
 import { z } from "zod";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter, usePathname } from "next/navigation";
 
 import {
   Form,
@@ -22,9 +23,16 @@ import { Button } from "@/components/ui/button";
 import { QuestionsSchema } from "@/lib/validations";
 import { createQuestion } from "@/lib/actions/question.action";
 
+type Props = {
+  mongoUserId: string;
+};
+
 const type: any = "create";
 
-const Question = () => {
+const Question = ({ mongoUserId }: Props) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -43,10 +51,15 @@ const Question = () => {
     try {
       // Make an async call to API -> create a question
       // contail all form data
-
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+      });
 
       // navigate to home page
+      router.push("/");
     } catch (error) {
     } finally {
       setIsSubmitting(false);
