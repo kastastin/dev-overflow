@@ -4,48 +4,14 @@ import Filter from "@/components/shared/Filter";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import NoResult from "@/components/shared/NoResult";
+import { getQuestions } from "@/lib/actions/question.action";
 import HomeFilters from "@/components/home/HomeFilters";
-import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import QuestionCard from "@/components/cards/QuestionCard";
+import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
-const questions = [
-  {
-    _id: "1",
-    title: "Best practices for data fetching",
-    tags: [
-      { _id: "1", name: "next" },
-      { _id: "2", name: "javascript" },
-    ],
-    author: {
-      _id: "1",
-      name: "John Snow",
-      picture: "url.png",
-    },
-    upvotes: 394440,
-    views: 12084200,
-    answers: [],
-    createdAt: new Date("2024-08-05T11:14:23.429Z"),
-  },
-  {
-    _id: "2",
-    title: "How to Perfectly Center a Div with Tailwind CSS?",
-    tags: [
-      { _id: "1", name: "css" },
-      { _id: "2", name: "javascript" },
-    ],
-    author: {
-      _id: "1",
-      name: "Sam White",
-      picture: "url.png",
-    },
-    upvotes: 4,
-    views: 36,
-    answers: [],
-    createdAt: new Date("2024-07-03T10:22:11.153Z"),
-  },
-];
+const Home = async () => {
+  const result = await getQuestions({});
 
-const Home = () => {
   return (
     <>
       {/* All Questions */}
@@ -78,8 +44,8 @@ const Home = () => {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
