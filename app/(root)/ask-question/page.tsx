@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
+// import { auth } from "@clerk/nextjs/server";
 
 import Question from "@/components/forms/Question";
 import { getUserById } from "@/lib/actions/user.action";
