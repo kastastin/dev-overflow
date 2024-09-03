@@ -27,7 +27,7 @@ const Metric = ({
         alt={alt}
         width={16}
         height={16}
-        className={`object-contain ${href && "rounded-full"}`}
+        className={`${href && "rounded-full"} ${isAuthor ? "size-[20px] object-cover" : "object-contain"}`}
       />
 
       <p className={`flex items-center gap-1 ${textStyles}`}>
