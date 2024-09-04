@@ -63,3 +63,12 @@ export interface GetTopInteractedTagsParams {
   userId: string;
   limit?: number;
 }
+
+// --- Answers ---
+
+export interface CreateAnswerParams {
+  content: string;
+  author: string; // User ID
+  question: string; // Question ID
+  path: string;
+}
