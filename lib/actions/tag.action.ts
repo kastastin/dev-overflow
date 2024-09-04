@@ -17,7 +17,7 @@ export async function getAllTags(params: GetAllTagsParams) {
 
     return { tags };
   } catch (error) {
-    console.log("Error in getTopInteractedTags", error);
+    console.log("Error in getAllTags", error);
     throw error;
   }
 }

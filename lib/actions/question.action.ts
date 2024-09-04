@@ -9,6 +9,7 @@ import { connectToDatabase } from "@/lib/mongoose";
 
 import {
   GetQuestionsParams,
+  GetQuestionByIdParams,
   CreateQuestionParams,
 } from "@/lib/actions/shared.types";
 
@@ -24,6 +25,27 @@ export async function getQuestions(params: GetQuestionsParams) {
     return { questions };
   } catch (error) {
     console.log("Error in getQuestions", error);
+    throw error;
+  }
+}
+
+export async function getQuestionById(params: GetQuestionByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId } = params;
+
+    const question = await Question.findById(questionId)
+      .populate({ path: "tags", model: Tag, select: "_id name" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name picture",
+      });
+
+    return question;
+  } catch (error) {
+    console.log("Error in getQuestionById", error);
     throw error;
   }
 }
@@ -57,7 +79,7 @@ export async function createQuestion(params: CreateQuestionParams) {
 
     // Increment author's reputation by +5 (for creating a question)
 
-    revalidatePath(path)
+    revalidatePath(path);
   } catch (error) {
     console.log("Error in createQuestion", error);
     throw error;
