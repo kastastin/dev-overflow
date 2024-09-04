@@ -48,6 +48,13 @@ export interface DeleteUserParams {
 
 // --- Tags ---
 
+export interface GetAllTagsParams {
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string;
+}
+
 export interface GetTopInteractedTagsParams {
   userId: string;
   limit?: number;
