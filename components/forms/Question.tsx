@@ -24,13 +24,13 @@ import { QuestionsSchema } from "@/lib/validations";
 import { useTheme } from "@/context/ThemeProvider";
 import { createQuestion } from "@/lib/actions/question.action";
 
-type Props = {
+type QuestionProps = {
   mongoUserId: string;
 };
 
 const type: any = "create";
 
-const Question = ({ mongoUserId }: Props) => {
+const Question = ({ mongoUserId }: QuestionProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -51,8 +51,6 @@ const Question = ({ mongoUserId }: Props) => {
     setIsSubmitting(true);
 
     try {
-      // Make an async call to API -> create a question
-      // contail all form data
       await createQuestion({
         title: values.title,
         content: values.explanation,
@@ -61,9 +59,9 @@ const Question = ({ mongoUserId }: Props) => {
         path: pathname,
       });
 
-      // navigate to home page
       router.push("/");
     } catch (error) {
+      console.log(error);
     } finally {
       setIsSubmitting(false);
     }
