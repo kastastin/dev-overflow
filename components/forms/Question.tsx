@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { QuestionsSchema } from "@/lib/validations";
+import { useTheme } from "@/context/ThemeProvider";
 import { createQuestion } from "@/lib/actions/question.action";
 
 type Props = {
@@ -33,6 +34,7 @@ const Question = ({ mongoUserId }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -182,6 +184,8 @@ const Question = ({ mongoUserId }: Props) => {
                       "bold italic forecolor | alignleft aligncenter " +
                       "alignright alignjustify | bullist numlist | help",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
