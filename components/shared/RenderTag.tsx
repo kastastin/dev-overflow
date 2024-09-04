@@ -1,6 +1,9 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 type TagProps = {
   _id: string;
@@ -10,8 +13,13 @@ type TagProps = {
 };
 
 const RenderTag = ({ _id, name, totalQuestions, showCount }: TagProps) => {
+  const router = useRouter();
+
   return (
-    <Link href={`/tags/${_id}`} className="flex justify-between gap-2">
+    <Button
+      className="flex justify-between gap-2"
+      onClick={() => router.push(`/tags/${_id}`)}
+    >
       <Badge className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase">
         {name}
       </Badge>
@@ -19,7 +27,7 @@ const RenderTag = ({ _id, name, totalQuestions, showCount }: TagProps) => {
       {showCount && (
         <p className="small-medium text-dark500_light700">{totalQuestions}</p>
       )}
-    </Link>
+    </Button>
   );
 };
 

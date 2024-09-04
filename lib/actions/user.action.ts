@@ -10,7 +10,23 @@ import {
   CreateUserParams,
   DeleteUserParams,
   UpdateUserParams,
+  GetAllUsersParams,
 } from "@/lib/actions/shared.types";
+
+export async function getAllUsers(params: GetAllUsersParams) {
+  try {
+    connectToDatabase();
+
+    // const { page = 1, pageSize = 20, filter, searchQuery } = params;
+
+    const users = await User.find({}).sort({ createdAt: -1 });
+
+    return { users };
+  } catch (error) {
+    console.log("Error in getAllUsers", error);
+    throw error;
+  }
+}
 
 export async function getUserById(params: any) {
   try {

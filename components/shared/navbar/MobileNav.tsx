@@ -70,7 +70,7 @@ const MobileNav = () => {
 
       <SheetContent
         side="left"
-        className="background-light900_dark200 overflow-y-auto border-none"
+        className="background-light900_dark200 no-scrollbar overflow-y-auto border-none"
       >
         <SheetTitle className="hidden">Menu</SheetTitle>
         <SheetDescription className="hidden">Menu list</SheetDescription>

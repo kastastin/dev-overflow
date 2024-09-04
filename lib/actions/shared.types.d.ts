@@ -2,6 +2,8 @@ import { Schema } from "mongoose";
 
 import { IUser } from "@/database/user.model";
 
+// --- Questions ---
+
 export interface GetQuestionsParams {
   page?: number;
   pageSize?: number;
@@ -15,6 +17,15 @@ export interface CreateQuestionParams {
   tags: string[];
   author: Schema.Types.ObjectId | IUser;
   path: string;
+}
+
+// --- Users ---
+
+export interface GetAllUsersParams {
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string; // Add searchQuery parameter
 }
 
 export interface CreateUserParams {
@@ -33,4 +44,11 @@ export interface UpdateUserParams {
 
 export interface DeleteUserParams {
   clerkId: string;
+}
+
+// --- Tags ---
+
+export interface GetTopInteractedTagsParams {
+  userId: string;
+  limit?: number;
 }
