@@ -87,3 +87,11 @@ export interface CreateAnswerParams {
   question: string; // Question ID
   path: string;
 }
+
+export interface AnswerVoteParams {
+  answerId: string;
+  userId: string;
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+  path: string;
+}

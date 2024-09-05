@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { getTimestamp } from "@/lib/utils";
 import Filter from "@/components/shared/Filter";
+import Votes from "@/components/shared/Votes";
 import { AnswerFilters } from "@/constants/filters";
 import { getAnswers } from "@/lib/actions/answer.action";
 import ParseHTML from "@/components/shared/ParseHTML";
@@ -22,7 +23,7 @@ const AllAnswers = async ({
   page,
   filter,
 }: Props) => {
-  const { answers } = await getAnswers({ questionId });
+  const answers = await getAnswers({ questionId });
 
   return (
     <div className="mt-12">
@@ -59,7 +60,17 @@ const AllAnswers = async ({
                 </div>
               </Link>
 
-              <div className="flex justify-end">Votes</div>
+              <div className="flex justify-end">
+                <Votes
+                  type="Answer"
+                  itemId={JSON.stringify(answer._id)}
+                  userId={JSON.stringify(userId)}
+                  upvotes={answer.upvotes.length}
+                  hasUpvoted={answer.upvotes.includes(userId)}
+                  downvotes={answer.downvotes.length}
+                  hasDownvoted={answer.downvotes.includes(userId)}
+                />
+              </div>
             </div>
 
             <ParseHTML data={answer.content} />

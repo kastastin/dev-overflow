@@ -3,14 +3,15 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import { formatAndDivideNumber } from "@/lib/utils";
 import {
-  downvoteQuestion,
   upvoteQuestion,
+  downvoteQuestion,
 } from "@/lib/actions/question.action";
+import { formatAndDivideNumber } from "@/lib/utils";
+import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 
 type Props = {
-  type: string;
+  type: "Question" | "Answer";
   itemId: string;
   userId: string;
   upvotes: number;
@@ -44,6 +45,14 @@ const Votes = ({
           hasDownvoted,
           path: pathname,
         });
+      } else if (type === "Answer") {
+        await upvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasUpvoted,
+          hasDownvoted,
+          path: pathname,
+        });
       }
 
       return;
@@ -53,6 +62,14 @@ const Votes = ({
       if (type === "Question") {
         await downvoteQuestion({
           questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasUpvoted,
+          hasDownvoted,
+          path: pathname,
+        });
+      } else if (type === "Answer") {
+        await downvoteAnswer({
+          answerId: JSON.parse(itemId),
           userId: JSON.parse(userId),
           hasUpvoted,
           hasDownvoted,
