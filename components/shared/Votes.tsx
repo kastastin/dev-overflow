@@ -1,8 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 import { formatAndDivideNumber } from "@/lib/utils";
+import {
+  downvoteQuestion,
+  upvoteQuestion,
+} from "@/lib/actions/question.action";
 
 type Props = {
   type: string;
@@ -25,7 +30,37 @@ const Votes = ({
   hasDownvoted,
   hasSaved,
 }: Props) => {
-  const handleVote = (action: string) => {};
+  const pathname = usePathname();
+
+  const handleVote = async (action: string) => {
+    if (!userId) return;
+
+    if (action === "upvote") {
+      if (type === "Question") {
+        await upvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasUpvoted,
+          hasDownvoted,
+          path: pathname,
+        });
+      }
+
+      return;
+    }
+
+    if (action === "downvote") {
+      if (type === "Question") {
+        await downvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasUpvoted,
+          hasDownvoted,
+          path: pathname,
+        });
+      }
+    }
+  };
 
   const handleSave = () => {};
 
