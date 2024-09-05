@@ -6,7 +6,24 @@ import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
 import { connectToDatabase } from "@/lib/mongoose";
 
-import { CreateAnswerParams } from "./shared.types";
+import { GetAnswersParams, CreateAnswerParams } from "./shared.types";
+
+export async function getAnswers(params: GetAnswersParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId } = params;
+
+    const answers = await Answer.find({ question: questionId })
+      .populate("author", "_id clerkId name picture")
+      .sort({ createdAt: -1 });
+
+    return { answers };
+  } catch (error) {
+    console.log("Error in getAnswers", error);
+    throw error;
+  }
+}
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {

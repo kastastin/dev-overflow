@@ -66,6 +66,13 @@ export interface GetTopInteractedTagsParams {
 
 // --- Answers ---
 
+export interface GetAnswersParams {
+  questionId: string;
+  sortBy?: string;
+  page?: number;
+  pageSize?: number;
+}
+
 export interface CreateAnswerParams {
   content: string;
   author: string; // User ID

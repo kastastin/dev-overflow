@@ -4,11 +4,12 @@ import { auth } from "@clerk/nextjs/server";
 
 import Metric from "@/components/shared/Metric";
 import Answer from "@/components/forms/Answer";
+import { getUserById } from "@/lib/actions/user.action";
 import RenderTag from "@/components/shared/RenderTag";
+import AllAnswers from "@/components/shared/AllAnswers";
 import ParseHTML from "@/components/shared/ParseHTML";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
-import { getUserById } from "@/lib/actions/user.action";
 
 const Page = async ({ params, searchParams }: any) => {
   const { userId: clerkId } = auth();
@@ -87,6 +88,12 @@ const Page = async ({ params, searchParams }: any) => {
           />
         ))}
       </div>
+
+      <AllAnswers
+        questionId={question._id}
+        userId={JSON.stringify(mongoUser._id)}
+        totalAnswers={question.answers.length}
+      />
 
       <Answer
         question={question.content}
