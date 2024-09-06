@@ -32,6 +32,8 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: QuestionCardProps) => {
+  console.log(`views: ${views}`);
+
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">

@@ -109,3 +109,10 @@ export interface AnswerVoteParams {
   hasDownvoted: boolean;
   path: string;
 }
+
+// --- Interactions ---
+
+export interface ViewQuestionParams {
+  questionId: string;
+  userId: string | undefined;
+}

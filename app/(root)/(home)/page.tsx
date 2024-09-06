@@ -10,7 +10,7 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
 const Home = async () => {
-  const result = await getQuestions({});
+  const questions = await getQuestions({});
 
   return (
     <>
@@ -44,8 +44,8 @@ const Home = async () => {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {result.questions.length > 0 ? (
-          result.questions.map((question) => (
+        {questions.length > 0 ? (
+          questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -53,7 +53,7 @@ const Home = async () => {
               tags={question.tags}
               author={question.author}
               upvotes={question.upvotes}
-              views={question.upvotes}
+              views={question.views}
               answers={question.answers}
               createdAt={question.createdAt}
             />
