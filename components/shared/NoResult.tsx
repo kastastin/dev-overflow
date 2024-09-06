@@ -20,7 +20,7 @@ const NoResult = ({ title, description, link, linkTitle }: Props) => {
         width={270}
         height={200}
         priority
-        className="block object-contain dark:hidden"
+        className="block w-auto object-contain dark:hidden"
       />
 
       {/* Dark img */}

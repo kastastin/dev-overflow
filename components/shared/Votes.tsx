@@ -8,6 +8,7 @@ import {
   downvoteQuestion,
 } from "@/lib/actions/question.action";
 import { formatAndDivideNumber } from "@/lib/utils";
+import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 
 type Props = {
@@ -79,7 +80,13 @@ const Votes = ({
     }
   };
 
-  const handleSave = () => {};
+  const handleSave = async () => {
+    await toggleSaveQuestion({
+      userId: JSON.parse(userId),
+      questionId: JSON.parse(itemId),
+      path: pathname,
+    });
+  };
 
   return (
     <div className="flex gap-5">
@@ -137,7 +144,7 @@ const Votes = ({
           alt="star"
           width={18}
           height={18}
-          className="cursor-pointer"
+          className="size-[18px] cursor-pointer"
           onClick={handleSave}
         />
       )}
