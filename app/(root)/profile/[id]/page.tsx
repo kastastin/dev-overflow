@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 
 import { URLProps } from "@/types";
 import { getJoinedDate } from "@/lib/utils";
+import Stats from "@/components/shared/Stats";
 import { Button } from "@/components/ui/button";
 import { getUserInfo } from "@/lib/actions/user.action";
 import ProfileLink from "@/components/shared/ProfileLink";
@@ -78,7 +79,10 @@ const Page = async ({ params, searchParams }: URLProps) => {
         </div>
       </div>
 
-      <div>Stats</div>
+      <Stats
+        totalQuestions={userInfo.totalQuestions}
+        totalAnswers={userInfo.totalAnswers}
+      />
 
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
