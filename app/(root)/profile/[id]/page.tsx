@@ -9,6 +9,8 @@ import Stats from "@/components/shared/Stats";
 import { Button } from "@/components/ui/button";
 import { getUserInfo } from "@/lib/actions/user.action";
 import ProfileLink from "@/components/shared/ProfileLink";
+import AnswersTab from "@/components/shared/tabs/AnswersTab";
+import QuestionsTab from "@/components/shared/tabs/QuestionsTab";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const Page = async ({ params, searchParams }: URLProps) => {
@@ -100,11 +102,19 @@ const Page = async ({ params, searchParams }: URLProps) => {
             value="top-posts"
             className="mt-5 flex w-full flex-col gap-6"
           >
-            Posts
+            <QuestionsTab
+              searchParams={searchParams}
+              userId={userInfo.user._id}
+              clerkId={clerkId}
+            />
           </TabsContent>
 
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
-            Answers
+            <AnswersTab
+              searchParams={searchParams}
+              userId={userInfo.user._id}
+              clerkId={clerkId}
+            />
           </TabsContent>
         </Tabs>
       </div>
