@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 
 import Tag from "@/database/tag.model";
 import User from "@/database/user.model";
+import Answer from "@/database/answer.model";
 import Question, { IQuestion } from "@/database/question.model";
 import { connectToDatabase } from "@/lib/mongoose";
 
@@ -13,6 +14,7 @@ import {
   DeleteUserParams,
   UpdateUserParams,
   GetAllUsersParams,
+  GetUserByIdParams,
   ToggleSaveQuestionParams,
   GetSavedQuestionsParams,
 } from "@/lib/actions/shared.types";
@@ -165,6 +167,30 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
     return { questions: savedQuestions };
   } catch (error) {
     console.log("Error in getSavedQuestions", error);
+    throw error;
+  }
+}
+
+export async function getUserInfo(params: GetUserByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) throw new Error("User not found");
+
+    const totalAnswers = await Answer.countDocuments({ author: user._id });
+    const totalQuestions = await Question.countDocuments({ author: user._id });
+
+    return {
+      user,
+      totalQuestions,
+      totalAnswers,
+    };
+  } catch (error) {
+    console.log("Error in getUserInfo", error);
     throw error;
   }
 }
