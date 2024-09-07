@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
 
+import { URLProps } from "@/types";
 import Votes from "@/components/shared/Votes";
 import Metric from "@/components/shared/Metric";
 import Answer from "@/components/forms/Answer";
@@ -12,14 +13,12 @@ import ParseHTML from "@/components/shared/ParseHTML";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 
-const Page = async ({ params, searchParams }: any) => {
+const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
 
   let mongoUser;
 
-  if (clerkId) {
-    mongoUser = await getUserById({ userId: clerkId });
-  }
+  if (clerkId) mongoUser = await getUserById({ userId: clerkId });
 
   const question = await getQuestionById({ questionId: params.id });
 
