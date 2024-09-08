@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { SignedIn } from "@clerk/nextjs";
 
 import Metric from "@/components/shared/Metric";
 import RenderTag from "@/components/shared/RenderTag";
-import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import { getTimestamp, formatAndDivideNumber } from "@/lib/utils";
+import EditDeleteAction from "@/components/shared/EditDeleteAction";
 
 type QuestionCardProps = {
   _id: string;
@@ -13,6 +15,7 @@ type QuestionCardProps = {
   }[];
   author: {
     _id: string;
+    clerkId: string;
     name: string;
     picture: string;
   };
@@ -25,6 +28,7 @@ type QuestionCardProps = {
 
 const QuestionCard = ({
   _id,
+  clerkId,
   title,
   tags,
   author,
@@ -33,6 +37,8 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: QuestionCardProps) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId;
+
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">
@@ -48,7 +54,11 @@ const QuestionCard = ({
           </Link>
         </div>
 
-        {/* TODO: Add edit/delete actions IF signed in */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
       </div>
 
       {/* Tags */}

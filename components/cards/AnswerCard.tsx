@@ -3,6 +3,7 @@ import { SignedIn } from "@clerk/nextjs";
 
 import Metric from "@/components/shared/Metric";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import EditDeleteAction from "@/components/shared/EditDeleteAction";
 
 interface Props {
   clerkId?: string | null;
@@ -22,8 +23,8 @@ interface Props {
 }
 
 const AnswerCard = ({
-  clerkId,
   _id,
+  clerkId,
   question,
   author,
   upvotes,
@@ -34,7 +35,7 @@ const AnswerCard = ({
   return (
     <div className="card-wrapper rounded-[10px] px-11 py-9">
       <Link href={`/question/${question._id}/#${_id}`}>
-        <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
+        <div className="flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">
           <div>
             <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
               {getTimestamp(createdAt)}
@@ -45,7 +46,9 @@ const AnswerCard = ({
           </div>
 
           <SignedIn>
-            {showActionButtons && <div>EditDeleteAction</div>}
+            {showActionButtons && (
+              <EditDeleteAction type="Answer" itemId={JSON.stringify(_id)} />
+            )}
           </SignedIn>
         </div>
       </Link>

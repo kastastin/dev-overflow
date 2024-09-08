@@ -23,6 +23,11 @@ export interface CreateQuestionParams {
   path: string;
 }
 
+export interface DeleteQuestionParams {
+  questionId: string;
+  path: string;
+}
+
 export interface QuestionVoteParams {
   questionId: string;
   userId: string;
@@ -116,6 +121,11 @@ export interface CreateAnswerParams {
   content: string;
   author: string; // User ID
   question: string; // Question ID
+  path: string;
+}
+
+export interface DeleteAnswerParams {
+  answerId: string;
   path: string;
 }
 

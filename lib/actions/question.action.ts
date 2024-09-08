@@ -4,13 +4,16 @@ import { revalidatePath } from "next/cache";
 
 import Tag from "@/database/tag.model";
 import User from "@/database/user.model";
+import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
+import Interaction from "@/database/interaction.model";
 import { connectToDatabase } from "@/lib/mongoose";
 
 import {
   GetQuestionsParams,
   GetQuestionByIdParams,
   CreateQuestionParams,
+  DeleteQuestionParams,
   QuestionVoteParams,
 } from "@/lib/actions/shared.types";
 
@@ -83,6 +86,27 @@ export async function createQuestion(params: CreateQuestionParams) {
     revalidatePath(path);
   } catch (error) {
     console.log("Error in createQuestion", error);
+    throw error;
+  }
+}
+
+export async function deleteQuestion(params: DeleteQuestionParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId, path } = params;
+
+    await Question.deleteOne({ _id: questionId });
+    await Answer.deleteMany({ question: questionId });
+    await Interaction.deleteMany({ question: questionId });
+    await Tag.updateMany(
+      { questions: questionId },
+      { $pull: { questions: questionId } }
+    );
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log("Error in deleteQuestion", error);
     throw error;
   }
 }
