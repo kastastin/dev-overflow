@@ -11,8 +11,8 @@ import { connectToDatabase } from "@/lib/mongoose";
 
 import {
   CreateUserParams,
-  DeleteUserParams,
   UpdateUserParams,
+  DeleteUserParams,
   GetAllUsersParams,
   GetUserByIdParams,
   ToggleSaveQuestionParams,
