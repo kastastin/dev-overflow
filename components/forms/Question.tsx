@@ -25,7 +25,7 @@ import { useTheme } from "@/context/ThemeProvider";
 import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 
 type QuestionProps = {
-  type?: "Create" | "Edit";
+  type?: "Edit";
   mongoUserId: string;
   questionDetails?: string;
 };
@@ -240,14 +240,14 @@ const Question = ({ type, mongoUserId, questionDetails }: QuestionProps) => {
                           key={tag}
                           className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
                           onClick={() =>
-                            type === "Create"
+                            type !== "Edit"
                               ? handleTagRemove(tag, field)
                               : null
                           }
                         >
                           {tag}
 
-                          {type === "Create" && (
+                          {type !== "Edit" && (
                             <Image
                               src="/assets/icons/close.svg"
                               alt="Close"
