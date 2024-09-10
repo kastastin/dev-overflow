@@ -22,10 +22,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { QuestionsSchema } from "@/lib/validations";
 import { useTheme } from "@/context/ThemeProvider";
-import { createQuestion } from "@/lib/actions/question.action";
+import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 
 type QuestionProps = {
-  type?: "Edit";
+  type?: "Create" | "Edit";
   mongoUserId: string;
   questionDetails?: string;
 };
@@ -57,6 +57,13 @@ const Question = ({ type, mongoUserId, questionDetails }: QuestionProps) => {
 
     try {
       if (type === "Edit") {
+        await editQuestion({
+          questionId: parsedQuestionDetails._id,
+          title: values.title,
+          content: values.explanation,
+          path: pathname,
+        });
+
         router.push(`/question/${parsedQuestionDetails._id}`);
       } else {
         await createQuestion({
@@ -221,6 +228,7 @@ const Question = ({ type, mongoUserId, questionDetails }: QuestionProps) => {
                 <>
                   <Input
                     placeholder="Add tags..."
+                    disabled={type === "Edit"}
                     className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
                   />
@@ -231,17 +239,23 @@ const Question = ({ type, mongoUserId, questionDetails }: QuestionProps) => {
                         <Badge
                           key={tag}
                           className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
-                          onClick={() => handleTagRemove(tag, field)}
+                          onClick={() =>
+                            type === "Create"
+                              ? handleTagRemove(tag, field)
+                              : null
+                          }
                         >
                           {tag}
 
-                          <Image
-                            src="/assets/icons/close.svg"
-                            alt="Close"
-                            width={12}
-                            height={12}
-                            className="cursor-pointer object-contain invert-0 dark:invert"
-                          />
+                          {type === "Create" && (
+                            <Image
+                              src="/assets/icons/close.svg"
+                              alt="Close"
+                              width={12}
+                              height={12}
+                              className="cursor-pointer object-contain invert-0 dark:invert"
+                            />
+                          )}
                         </Badge>
                       ))}
                     </div>
