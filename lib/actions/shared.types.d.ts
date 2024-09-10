@@ -7,7 +7,7 @@ import { IUser } from "@/database/user.model";
 export interface GetQuestionsParams {
   page?: number;
   pageSize?: number;
-  searchQuesry?: string;
+  searchQuery?: string;
   filter?: string;
 }
 

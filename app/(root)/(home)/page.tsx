@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { SearchParamsProps } from "@/types";
 import Filter from "@/components/shared/Filter";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
@@ -9,8 +10,10 @@ import HomeFilters from "@/components/home/HomeFilters";
 import QuestionCard from "@/components/cards/QuestionCard";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
-const Home = async () => {
-  const questions = await getQuestions({});
+const Home = async ({ searchParams }: SearchParamsProps) => {
+  const questions = await getQuestions({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
