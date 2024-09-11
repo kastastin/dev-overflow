@@ -1,13 +1,16 @@
 import Link from "next/link";
 
+import { SearchParamsProps } from "@/types";
 import { UserFilters } from "@/constants/filters";
 import Filter from "@/components/shared/Filter";
 import UserCard from "@/components/cards/UserCard";
 import { getAllUsers } from "@/lib/actions/user.action";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
-const Community = async () => {
-  const result = await getAllUsers({});
+const Community = async ({ searchParams }: SearchParamsProps) => {
+  const users = await getAllUsers({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
@@ -29,8 +32,8 @@ const Community = async () => {
       </div>
 
       <section className="mt-12 flex flex-wrap gap-4">
-        {result.users.length > 0 ? (
-          result.users.map((user) => <UserCard key={user._id} user={user} />)
+        {users.length > 0 ? (
+          users.map((user) => <UserCard key={user._id} user={user} />)
         ) : (
           <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
             <p>No users yet</p>
