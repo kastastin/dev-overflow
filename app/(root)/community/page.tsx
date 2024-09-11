@@ -10,6 +10,7 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 const Community = async ({ searchParams }: SearchParamsProps) => {
   const users = await getAllUsers({
     searchQuery: searchParams.q,
+    filter: searchParams.filter
   });
 
   return (

@@ -48,7 +48,7 @@ const HomeFilters = () => {
                 ? "bg-primary-100 text-primary-500"
                 : "bg-light-800 text-light-500"
             }`}
-          onClickCapture={() => handleTypeClick(filter.value)}
+          onClick={() => handleTypeClick(filter.value)}
         >
           {filter.name}
         </Button>
