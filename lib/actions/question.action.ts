@@ -23,7 +23,9 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page = 1, pageSize = 2 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<IQuestion> = {};
 
@@ -40,15 +42,15 @@ export async function getQuestions(params: GetQuestionsParams) {
       case "newest":
         sortOptions = { createdAt: -1 };
         break;
-      
+
       case "frequent":
         sortOptions = { views: -1 };
         break;
-      
+
       case "unanswered":
         query.answers = { $size: 0 };
         break;
-      
+
       default:
         break;
     }
@@ -56,9 +58,15 @@ export async function getQuestions(params: GetQuestionsParams) {
     const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort(sortOptions);
 
-    return questions;
+    const totalQuestions = await Question.countDocuments(query);
+
+    const isNext = totalQuestions > page * pageSize;
+
+    return { questions, isNext };
   } catch (error) {
     console.log("Error in getQuestions", error);
     throw error;

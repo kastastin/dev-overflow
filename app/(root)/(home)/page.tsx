@@ -12,9 +12,10 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
-  const questions = await getQuestions({
+  const data = await getQuestions({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: Number(searchParams.page) || 1,
   });
 
   return (
@@ -49,8 +50,8 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {data.questions.length > 0 ? (
+          data.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -76,8 +77,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
       <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? Number(searchParams.page) : 1}
-          isNext={true}
-          // isNext={result.isNext}
+          isNext={data.isNext}
         />
       </div>
     </>
