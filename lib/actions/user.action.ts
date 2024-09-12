@@ -61,9 +61,9 @@ export async function getAllUsers(params: GetAllUsersParams) {
       .skip(skipAmount)
       .limit(pageSize);
 
-    const totalQuestions = await User.countDocuments(query);
+    const totalUsers = await User.countDocuments(query);
 
-    const isNext = totalQuestions > page * pageSize;
+    const isNext = totalUsers > page * pageSize;
 
     return { users, isNext };
   } catch (error) {
@@ -227,9 +227,9 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
       ],
     });
 
-    const isNext = user.saved.length > pageSize;
-
     if (!user) throw new Error("User not found");
+
+    const isNext = user.saved.length > pageSize;
 
     const savedQuestions = user.saved;
 

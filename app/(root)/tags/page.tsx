@@ -5,12 +5,14 @@ import { TagFilters } from "@/constants/filters";
 import Filter from "@/components/shared/Filter";
 import { getAllTags } from "@/lib/actions/tag.action";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
 const Tags = async ({ searchParams }: SearchParamsProps) => {
-  const tags = await getAllTags({
+  const data = await getAllTags({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: Number(searchParams.page) || 1,
   });
 
   return (
@@ -33,8 +35,8 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
       </div>
 
       <section className="mt-12 flex flex-wrap gap-4">
-        {tags.length > 0 ? (
-          tags.map((tag) => (
+        {data.tags.length > 0 ? (
+          data.tags.map((tag) => (
             <Link
               key={tag._id}
               href={`/tags/${tag._id}`}
@@ -65,6 +67,13 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
           />
         )}
       </section>
+
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? Number(searchParams.page) : 1}
+          isNext={data.isNext}
+        />
+      </div>
     </>
   );
 };

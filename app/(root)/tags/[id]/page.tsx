@@ -1,20 +1,21 @@
 import { URLProps } from "@/types";
-import { getQuestionsByTagId } from "@/lib/actions/tag.action";
-import QuestionCard from "@/components/cards/QuestionCard";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
+import QuestionCard from "@/components/cards/QuestionCard";
+import { getQuestionsByTagId } from "@/lib/actions/tag.action";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
 const Page = async ({ params, searchParams }: URLProps) => {
-  const result = await getQuestionsByTagId({
+  const data = await getQuestionsByTagId({
     tagId: params.id,
-    page: 1,
     searchQuery: searchParams.q,
+    page: Number(searchParams.page) || 1,
   });
 
   return (
     <>
       <h1 className="h1-bold text-dark100_light900 capitalize">
-        {result.tagTitle}
+        {data.tagTitle}
       </h1>
 
       <div className="mt-12 w-full">
@@ -28,8 +29,8 @@ const Page = async ({ params, searchParams }: URLProps) => {
       </div>
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {result.questions.length > 0 ? (
-          result.questions.map((question: any) => (
+        {data.questions.length > 0 ? (
+          data.questions.map((question: any) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -50,6 +51,13 @@ const Page = async ({ params, searchParams }: URLProps) => {
             linkTitle="Ask a Question"
           />
         )}
+      </div>
+
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? Number(searchParams.page) : 1}
+          isNext={data.isNext}
+        />
       </div>
     </>
   );
