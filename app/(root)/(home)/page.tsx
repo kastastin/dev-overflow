@@ -5,6 +5,7 @@ import Filter from "@/components/shared/Filter";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
 import { getQuestions } from "@/lib/actions/question.action";
 import HomeFilters from "@/components/home/HomeFilters";
 import QuestionCard from "@/components/cards/QuestionCard";
@@ -70,6 +71,14 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
             linkTitle="Ask a Question"
           />
         )}
+      </div>
+
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? Number(searchParams.page) : 1}
+          isNext={true}
+          // isNext={result.isNext}
+        />
       </div>
     </>
   );
