@@ -6,9 +6,10 @@ import Filter from "@/components/shared/Filter";
 import Votes from "@/components/shared/Votes";
 import { AnswerFilters } from "@/constants/filters";
 import { getAnswers } from "@/lib/actions/answer.action";
+import Pagination from "@/components/shared/Pagination";
 import ParseHTML from "@/components/shared/ParseHTML";
 
-type Props = {
+type AllAnswersProps = {
   questionId: string;
   userId: string;
   totalAnswers: number;
@@ -22,11 +23,11 @@ const AllAnswers = async ({
   totalAnswers,
   page,
   filter,
-}: Props) => {
-  const answers = await getAnswers({
+}: AllAnswersProps) => {
+  const data = await getAnswers({
     questionId,
     sortBy: filter,
-    page: page || 1,
+    page: page ? +page : 1,
   });
 
   return (
@@ -38,7 +39,7 @@ const AllAnswers = async ({
       </div>
 
       <div>
-        {answers.map((answer) => (
+        {data.answers.map((answer) => (
           <article key={answer._id} className="light-border border-b py-10">
             <div className="mb-8 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
               <Link
@@ -80,6 +81,10 @@ const AllAnswers = async ({
             <ParseHTML data={answer.content} />
           </article>
         ))}
+      </div>
+
+      <div className="mt-10 w-full">
+        <Pagination pageNumber={page ? +page : 1} isNext={data.isNext} />
       </div>
     </div>
   );
