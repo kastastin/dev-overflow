@@ -6,17 +6,14 @@ import { useEffect, useState } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useSearchParams } from "next/navigation";
 
+import { globalSearch } from "@/lib/actions/general.action";
 import GlobalFilters from "@/components/shared/search/GlobalFilters";
 
 const GlobalResult = () => {
   const searchParams = useSearchParams();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([
-    { type: "question", id: 1, title: "Next.js question" },
-    { type: "tag", id: 1, title: "Nextjs" },
-    { type: "user", id: 1, title: "jsm" },
-  ]);
+  const [data, setData] = useState([]);
 
   const type = searchParams.get("type");
   const global = searchParams.get("global");
@@ -27,8 +24,8 @@ const GlobalResult = () => {
       setData([]);
 
       try {
-        // const result = await globalSearch({ query: global, type });
-        // setData(JSON.parse(result));
+        const data = await globalSearch({ query: global, type });
+        setData(JSON.parse(data));
       } catch (error) {
         console.error(error);
         throw error;
