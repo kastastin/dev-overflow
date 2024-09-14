@@ -56,4 +56,11 @@ export interface RemoveUrlQueryParams {
   keysToRemove: string[];
 }
 
+export interface BadgeParam {
+  criteria: {
+    count: number;
+    type: keyof typeof BADGE_CRITERIA;
+  }[];
+}
+
 export type BadgeCriteriaType = keyof typeof BADGE_CRITERIA;
