@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/shared/navbar/Navbar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import RightSidebar from "@/components/shared/RightSidebar";
@@ -23,7 +24,7 @@ export default function RootLayout({
         <RightSidebar />
       </div>
 
-      {/* Toaster */}
+      <Toaster />
     </main>
   );
 }
