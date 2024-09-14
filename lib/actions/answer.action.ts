@@ -22,7 +22,7 @@ export async function getAnswers(params: GetAnswersParams) {
     const { questionId, sortBy, page = 1, pageSize = 10 } = params;
 
     const skipAmount = (page - 1) * pageSize;
-    
+
     let sortOptions = {};
 
     switch (sortBy) {
@@ -51,12 +51,12 @@ export async function getAnswers(params: GetAnswersParams) {
       .sort(sortOptions)
       .skip(skipAmount)
       .limit(pageSize);
-    
+
     const totalAnswers = await Answer.countDocuments({ question: questionId });
 
     const isNext = totalAnswers > skipAmount + answers.length;
 
-    return {answers, isNext};
+    return { answers, isNext };
   } catch (error) {
     console.log("Error in getAnswers", error);
     throw error;
@@ -72,11 +72,19 @@ export async function createAnswer(params: CreateAnswerParams) {
     const newAnswer = await Answer.create({ content, author, question });
 
     // Add the answer to question's answers array
-    await Question.findByIdAndUpdate(question, {
+    const questionObject = await Question.findByIdAndUpdate(question, {
       $push: { answers: newAnswer._id },
     });
 
-    // TODO: Add Interaction
+    await Interaction.create({
+      user: author,
+      action: "answer",
+      question,
+      answer: newAnswer._id,
+      tags: questionObject.tags,
+    });
+
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
     revalidatePath(path);
   } catch (error) {
