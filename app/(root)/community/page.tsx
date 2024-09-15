@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Metadata } from "next";
 
 import { SearchParamsProps } from "@/types";
 import { UserFilters } from "@/constants/filters";
@@ -7,6 +8,10 @@ import UserCard from "@/components/cards/UserCard";
 import { getAllUsers } from "@/lib/actions/user.action";
 import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
+
+export const metadata: Metadata = {
+  title: "Community | DevOverflow",
+};
 
 const Community = async ({ searchParams }: SearchParamsProps) => {
   const data = await getAllUsers({

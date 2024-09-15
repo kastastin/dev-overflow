@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import type { Metadata } from "next";
 import { SearchParamsProps } from "@/types";
 import Filter from "@/components/shared/Filter";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,12 @@ import { getQuestions } from "@/lib/actions/question.action";
 import HomeFilters from "@/components/home/HomeFilters";
 import QuestionCard from "@/components/cards/QuestionCard";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
+
+export const metadata: Metadata = {
+  title: "Home | DevOverflow",
+  description:
+    "DevOverflow is a community of developers helping each other. Join us and ask your programming questions.",
+};
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
   const data = await getQuestions({
