@@ -43,6 +43,13 @@ export interface QuestionVoteParams {
   path: string;
 }
 
+export interface RecommendedParams {
+  userId: string;
+  page?: number;
+  pageSize?: number;
+  searchQuery?: string;
+}
+
 // --- Users ---
 
 export interface GetAllUsersParams {
